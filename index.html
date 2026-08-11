@@ -650,7 +650,7 @@
   // 1. Dùng Deep Copy để đảm bảo không ghi đè mất ảnh mặc định khi bấm Khôi phục
   let data = JSON.parse(JSON.stringify(SEED));
   try {
-    const local = localStorage.getItem('portfolio_data_v8');
+    const local = localStorage.getItem('portfolio_data_v9');
     if(local) data = JSON.parse(local);
   } catch(e){}
 
@@ -1098,7 +1098,7 @@
     
     // Bọc trong try-catch để bắt lỗi QuotaExceededError (Bộ nhớ đầy do ảnh)
     try {
-      localStorage.setItem('portfolio_data_v8', JSON.stringify(data));
+      localStorage.setItem('portfolio_data_v9', JSON.stringify(data));
       renderAll();
       document.getElementById('editorBackdrop').classList.add('hidden');
     } catch (e) {
@@ -1150,7 +1150,7 @@
             const bakedData = ${JSON.stringify(data)};
             const originalGetItem = localStorage.getItem;
             localStorage.getItem = function(key) {
-              if(key === 'portfolio_data_v8') return JSON.stringify(bakedData);
+              if(key === 'portfolio_data_v9') return JSON.stringify(bakedData);
               return originalGetItem.call(localStorage, key);
             };
           })();
@@ -1177,7 +1177,7 @@
         reader.onload = (evt) => {
           try {
             data = JSON.parse(evt.target.result);
-            localStorage.setItem('portfolio_data_v8', JSON.stringify(data));
+            localStorage.setItem('portfolio_data_v9', JSON.stringify(data));
             renderAll();
             renderEditor();
             alert('Nhập dữ liệu thành công!');
@@ -1194,7 +1194,7 @@
   if(resetBtn) {
     resetBtn.onclick = () => {
       if(confirm('Khôi phục về dữ liệu gốc? Việc này sẽ xoá những gì bạn vừa lưu.')) {
-        localStorage.removeItem('portfolio_data_v8');
+        localStorage.removeItem('portfolio_data_v9');
         data = JSON.parse(JSON.stringify(SEED)); // Khôi phục từ bản sao sâu
         renderAll();
         if(editorBackdrop) editorBackdrop.classList.add('hidden');
